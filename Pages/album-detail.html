@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Album Details | NRR Music</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="icon" href="../assets/Images/favicon.png" type="image/png">
+    <script src="../assets/js/music-player.js"></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <img src="../assets/Images/NRRLogo.png" alt="NRR Logo" width="40" height="40">
+                <h1>NRR Music</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="albums.html">Albums</a></li>
+                    <li><a href="music-player.html">Player</a></li>
+                    <li><a href="store.html">Store</a></li>
+                    <li><a href="subscription.html">Subscription</a></li>
+                    <li><a href="instruments.html">Instruments</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                <button class="search-btn">🔍</button>
+                <button class="login-btn">Login</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Album Detail Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="album-detail-header">
+                <div class="album-cover">
+                    <img id="album-cover" src="../assets/Music/Jane Duke/Infection - Mp3/Infection.jpg" alt="Album Cover">
+                </div>
+                <div class="album-info">
+                    <h1 id="album-title">Album Title</h1>
+                    <p class="artist" id="album-artist">Artist Name</p>
+                    <p class="year" id="album-year">Release Year: 2024</p>
+                    <p class="genre" id="album-genre">Genre: Electronic / Ambient</p>
+                    <div class="album-buttons">
+                        <button class="btn primary" id="play-all-btn">▶️ Play All</button>
+                        <button class="btn secondary">➕ Add to Library</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Track List -->
+    <section class="featured-section">
+        <div class="container">
+            <h2>Track List</h2>
+            <div id="track-list" class="track-list">
+                <!-- Track items will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Album data
+        const albums = {
+            "Infection": {
+                title: "Infection",
+                artist: "Jane Duke",
+                year: "2024",
+                genre: "Electronic / Ambient",
+                cover: "../assets/Music/Jane Duke/Infection - Mp3/Infection.jpg",
+                tracks: [
+                    {number: 1, title: "Deep Space Melancholy", duration: "3:45"},
+                    {number: 2, title: "Aether Keys", duration: "4:12"},
+                    {number: 3, title: "Bells Of Heaven", duration: "3:28"},
+                    {number: 4, title: "Time", duration: "5:02"},
+                    {number: 5, title: "Insecure Skies", duration: "3:57"},
+                    {number: 6, title: "Insane Arpeggios", duration: "4:33"},
+                    {number: 7, title: "Drunken Robot Music", duration: "3:15"},
+                    {number: 8, title: "Cyberpunk Racing", duration: "4:08"},
+                    {number: 9, title: "Infection", duration: "5:22"}
+                ]
+            },
+            "The Origin Of Evil": {
+                title: "The Origin Of Evil",
+                artist: "Jane Duke",
+                year: "2024",
+                genre: "Dark / Epic",
+                cover: "../assets/Music/Jane Duke/The Origin Of Evil - The Legend Of Narcissus And Oedipus - Final - MP3 320kbps/The Origin Of Evil - The Legend Of Narcissus And Oedipus.png",
+                tracks: [
+                    {number: 1, title: "Morning Birds", duration: "3:45"},
+                    {number: 2, title: "Village Festival", duration: "4:12"},
+                    {number: 3, title: "Evil's Messenger", duration: "3:28"},
+                    {number: 4, title: "Sewers Exploration", duration: "5:02"},
+                    {number: 5, title: "Dark Fantasy Jungle", duration: "3:57"},
+                    {number: 6, title: "Obscure Dungeon", duration: "4:33"},
+                    {number: 7, title: "March Of The Nibelungs", duration: "3:15"},
+                    {number: 8, title: "Anticipated Battles", duration: "4:08"},
+                    {number: 9, title: "Battlefield Cacophony", duration: "5:22"},
+                    {number: 10, title: "Betrayal Of Corrupted Lords", duration: "3:41"},
+                    {number: 11, title: "Soul Crusher", duration: "4:18"},
+                    {number: 12, title: "Dramatic Waltz", duration: "3:35"},
+                    {number: 13, title: "Burial Of A Friend", duration: "4:27"},
+                    {number: 14, title: "Devil's Joke", duration: "3:59"},
+                    {number: 15, title: "Welcome To Hells", duration: "4:44"},
+                    {number: 16, title: "Dance Of The Undead", duration: "3:22"},
+                    {number: 17, title: "Demonic Melody", duration: "4:10"},
+                    {number: 18, title: "Railroads Of Tortures", duration: "3:48"},
+                    {number: 19, title: "Brutal Death Symphony Movement 1", duration: "5:15"},
+                    {number: 20, title: "Brutal Death Symphony Movement 2", duration: "4:30"},
+                    {number: 21, title: "Hopeful Melancholy", duration: "3:55"}
+                ]
+            }
+        };
+
+        // Function to load album details
+        function loadAlbumDetails(albumName) {
+            const album = albums[albumName];
+            if (!album) return;
+
+            // Update album information
+            document.getElementById('album-title').textContent = album.title;
+            document.getElementById('album-artist').textContent = album.artist;
+            document.getElementById('album-year').textContent = `Release Year: ${album.year}`;
+            document.getElementById('album-genre').textContent = `Genre: ${album.genre}`;
+            document.getElementById('album-cover').src = album.cover;
+            
+            // Update play all button
+            document.getElementById('play-all-btn').onclick = function() {
+                playAlbum(albumName);
+            };
+            
+            // Populate track list
+            const trackList = document.getElementById('track-list');
+            trackList.innerHTML = '';
+            
+            album.tracks.forEach(track => {
+                const trackElement = document.createElement('div');
+                trackElement.className = 'track-item';
+                trackElement.innerHTML = `
+                    <div class="track-number">${track.number}</div>
+                    <div class="track-info">
+                        <h3>${track.title}</h3>
+                        <p>Duration: ${track.duration}</p>
+                    </div>
+                    <div class="track-actions">
+                        <button class="play-btn" onclick="playTrack('${albumName}', ${track.number})">▶️ Play</button>
+                        <button class="download-btn" onclick="downloadTrack('${albumName}', ${track.number})">⬇️ Download</button>
+                    </div>
+                `;
+                trackList.appendChild(trackElement);
+            });
+        }
+
+        // Function to initialize the page
+        function initPage() {
+            // Get album name from URL parameter or default to Infection
+            const urlParams = new URLSearchParams(window.location.search);
+            const albumName = urlParams.get('album') || 'Infection';
+            loadAlbumDetails(albumName);
+        }
+
+        // Initialize when page loads
+        window.onload = initPage;
+        
+        // Function to play album (to be implemented in music player)
+function playAlbum(albumName) {
+    if (window.persistentMusicPlayer) {
+        window.persistentMusicPlayer.playAlbum(albumName);
+    } else {
+        alert("Music player not initialized.");
+    }
+}
+        
+        // Function to play track (to be implemented in music player)
+function playTrack(albumName, trackNumber) {
+    if (window.persistentMusicPlayer) {
+        const album = window.persistentMusicPlayer.albums[albumName];
+        if (album) {
+            const idx = album.tracks.findIndex(t => t.number === trackNumber);
+            if (idx !== -1) {
+                window.persistentMusicPlayer.playTrack(idx);
+            } else {
+                alert("Track not found.");
+            }
+        } else {
+            alert("Album not found.");
+        }
+    } else {
+        alert("Music player not initialized.");
+    }
+}
+        
+        // Function to download track (to be implemented to prevent unauthorized downloads)
+        function downloadTrack(albumName, trackNumber) {
+            // This will be handled to prevent unauthorized downloads
+            alert("Download functionality would be implemented here for album: " + albumName + ", track: " + trackNumber);
+        }
+    </script>
+
+    <!-- Pricing Options -->
+    <section class="free-paid-section">
+        <div class="container">
+            <h2>Get This Album</h2>
+            <div class="pricing-tiers">
+                <div class="pricing-card">
+                    <h3>Free Stream</h3>
+                    <p>MP3 Quality</p>
+                    <ul>
+                        <li>🎵 Unlimited streaming</li>
+                        <li>📱 Mobile friendly</li>
+                        <li>🎧 Basic player</li>
+                    </ul>
+                    <button class="btn primary">Start Free</button>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <h3>Premium WAV</h3>
+                    <p>High Quality Audio</p>
+                    <ul>
+                        <li>🔊 Lossless quality</li>
+                        <li>💾 Downloadable</li>
+                        <li>🎁 Exclusive content</li>
+                    </ul>
+                    <button class="btn secondary">Buy WAV ($9.99)</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Subscription</h3>
+                    <p>Early Access</p>
+                    <ul>
+                        <li>🆕 Unreleased tracks</li>
+                        <li>🎧 Early downloads</li>
+                        <li>🎉 Member perks</li>
+                    </ul>
+                    <button class="btn tertiary">Join Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/Images/NRRLogo.png" alt="NRR Logo" width="30" height="30">
+                    <h3>NRR Music</h3>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="albums.html">Albums</a></li>
+                        <li><a href="store.html">Store</a></li>
+                        <li><a href="subscription.html">Subscription</a></li>
+                        <li><a href="instruments.html">Instruments</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#">FB</a>
+                    <a href="#">IG</a>
+                    <a href="#">YT</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NRR Music. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

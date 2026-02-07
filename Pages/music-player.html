@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player | NRR Music</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="icon" href="../assets/Images/favicon.png" type="image/png">
+    <script src="../assets/js/music-player.js"></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <img src="../assets/Images/NRRLogo.png" alt="NRR Logo" width="40" height="40">
+                <h1>NRR Music</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="albums.html">Albums</a></li>
+                    <li><a href="music-player.html" class="active">Player</a></li>
+                    <li><a href="store.html">Store</a></li>
+                    <li><a href="subscription.html">Subscription</a></li>
+                    <li><a href="instruments.html">Instruments</a></li>
+                </ul>
+            </nav>
+            <div class="user-controls">
+                <button class="search-btn">🔍</button>
+                <button class="login-btn">Login</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Player Hero -->
+    <section class="hero">
+        <div class="container">
+            <h2>Music Player</h2>
+            <p>Enjoy your favorite tracks with our premium player</p>
+        </div>
+    </section>
+
+    <!-- Player Interface -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="player-container">
+                <!-- Album Art -->
+                <div class="player-album-art">
+                    <img id="now-playing-cover" src="" alt="Now Playing">
+                </div>
+                
+                <!-- Track Info -->
+                <div class="player-track-info">
+                    <h2 id="now-playing-title">Track Title</h2>
+                    <p class="artist" id="now-playing-artist">Artist Name</p>
+                    <p class="album" id="now-playing-album">Album Title</p>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="player-progress">
+                    <span class="current-time" id="current-time">1:23</span>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                    <span class="total-time" id="total-time">3:45</span>
+                </div>
+                
+                <!-- Controls -->
+                <div class="player-controls">
+                    <button class="control-btn" id="prev-btn">⏮️</button>
+                    <button class="control-btn play-btn" id="play-btn">▶️</button>
+                    <button class="control-btn" id="next-btn">⏭️</button>
+                </div>
+                
+                <!-- Volume Control -->
+                <div class="player-volume">
+                    <button class="control-btn" id="volume-btn">🔈</button>
+                    <div class="volume-slider">
+                        <div class="volume-level" id="volume-level"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Playlist -->
+            <div class="playlist">
+                <h3>Playlist</h3>
+                <div id="playlist-items" class="playlist-items">
+                    <!-- Playlist items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Audio player variables
+        let currentAudio = null;
+        let isPlaying = false;
+        let currentAlbum = null;
+        let currentTrackIndex = 0;
+        
+        // Album data
+        const albums = {
+            "Infection": {
+                title: "Infection",
+                artist: "Jane Duke",
+                year: "2024",
+                genre: "Electronic / Ambient",
+                cover: "../assets/Music/Jane Duke/Infection - Mp3/Infection.jpg",
+                tracks: [
+                    {number: 1, title: "Deep Space Melancholy", duration: "3:45", filename: "1 - Deep Space Melancholy.mp3"},
+                    {number: 2, title: "Aether Keys", duration: "4:12", filename: "2 - Aether Keys.mp3"},
+                    {number: 3, title: "Bells Of Heaven", duration: "3:28", filename: "3 - Bells Of Heaven.mp3"},
+                    {number: 4, title: "Time", duration: "5:02", filename: "4 - Time.mp3"},
+                    {number: 5, title: "Insecure Skies", duration: "3:57", filename: "5 - Insecure Skies.mp3"},
+                    {number: 6, title: "Insane Arpeggios", duration: "4:33", filename: "6 - Insane Arpeggios.mp3"},
+                    {number: 7, title: "Drunken Robot Music", duration: "3:15", filename: "7 - Drunken Robot Music.mp3"},
+                    {number: 8, title: "Cyberpunk Racing", duration: "4:08", filename: "8 - Cyberpunk Racing.mp3"},
+                    {number: 9, title: "Infection", duration: "5:22", filename: "9 - Infection.mp3"}
+                ]
+            },
+            "The Origin Of Evil": {
+                title: "The Origin Of Evil",
+                artist: "Jane Duke",
+                year: "2024",
+                genre: "Dark / Epic",
+                cover: "../assets/Music/Jane Duke/The Origin Of Evil - The Legend Of Narcissus And Oedipus - Final - MP3 320kbps/The Origin Of Evil - The Legend Of Narcissus And Oedipus.png",
+                tracks: [
+                    {number: 1, title: "Morning Birds", duration: "3:45", filename: "01 - Morning Birds.mp3"},
+                    {number: 2, title: "Village Festival", duration: "4:12", filename: "02 - Village Festival.mp3"},
+                    {number: 3, title: "Evil's Messenger", duration: "3:28", filename: "03 - Evil's Messenger.mp3"},
+                    {number: 4, title: "Sewers Exploration", duration: "5:02", filename: "04 - Sewers Exploration.mp3"},
+                    {number: 5, title: "Dark Fantasy Jungle", duration: "3:57", filename: "05 - Dark Fantasy Jungle.mp3"},
+                    {number: 6, title: "Obscure Dungeon", duration: "4:33", filename: "06 - Obscure Dungeon.mp3"},
+                    {number: 7, title: "March Of The Nibelungs", duration: "3:15", filename: "07 - March Of The Nibelungs.mp3"},
+                    {number: 8, title: "Anticipated Battles", duration: "4:08", filename: "08 - Anticipated Battles.mp3"},
+                    {number: 9, title: "Battlefield Cacophony", duration: "5:22", filename: "09 - Battlefield Cacophony.mp3"},
+                    {number: 10, title: "Betrayal Of Corrupted Lords", duration: "3:41", filename: "10 - Betrayal Of Corrupted Lords.mp3"},
+                    {number: 11, title: "Soul Crusher", duration: "4:18", filename: "11 - Soul Crusher.mp3"},
+                    {number: 12, title: "Dramatic Waltz", duration: "3:35", filename: "12 - Dramatic Waltz.mp3"},
+                    {number: 13, title: "Burial Of A Friend", duration: "4:27", filename: "13 - Burial Of A Friend.mp3"},
+                    {number: 14, title: "Devil's Joke", duration: "3:59", filename: "14 - Devil's Joke.mp3"},
+                    {number: 15, title: "Welcome To Hells", duration: "4:44", filename: "15 - Welcome To Hells.mp3"},
+                    {number: 16, title: "Dance Of The Undead", duration: "3:22", filename: "16 - Dance Of The Undead.mp3"},
+                    {number: 17, title: "Demonic Melody", duration: "4:10", filename: "17 - Demonic Melody.mp3"},
+                    {number: 18, title: "Railroads Of Tortures", duration: "3:48", filename: "18 - Railroads Of Tortures.mp3"},
+                    {number: 19, title: "Brutal Death Symphony Movement 1", duration: "5:15", filename: "19 - Brutal Death Symphony Movement 1.mp3"},
+                    {number: 20, title: "Brutal Death Symphony Movement 2", duration: "4:30", filename: "20 - Brutal Death Symphony Movement 2.mp3"},
+                    {number: 21, title: "Hopeful Melancholy", duration: "3:55", filename: "21 - Hopeful Melancholy.mp3"}
+                ]
+            }
+        };
+        
+        // Function to play album
+        function playAlbum(albumName) {
+            const album = albums[albumName];
+            if (!album) return;
+            
+            currentAlbum = album;
+            currentTrackIndex = 0;
+            playTrack(currentTrackIndex);
+        }
+        
+        // Function to play specific track
+        function playTrack(index) {
+            if (!currentAlbum || index < 0 || index >= currentAlbum.tracks.length) return;
+            
+            const track = currentAlbum.tracks[index];
+            const trackPath = `./assets/Music/Jane Duke/${encodeURIComponent(currentAlbum.title.replace(/\s+/g, ' '))}/${encodeURIComponent(track.filename)}`;
+            
+            // Update UI
+            document.getElementById('now-playing-title').textContent = track.title;
+            document.getElementById('now-playing-artist').textContent = currentAlbum.artist;
+            document.getElementById('now-playing-album').textContent = currentAlbum.title;
+            document.getElementById('now-playing-cover').src = currentAlbum.cover;
+            
+            // Update playlist highlighting
+            updatePlaylistHighlight(index);
+            
+            // Create audio element for actual playback
+            if (currentAudio) {
+                currentAudio.pause();
+            }
+            
+            // Create new audio element
+            currentAudio = new Audio(trackPath);
+            
+            // Set up audio event handlers
+            currentAudio.addEventListener('canplay', () => {
+                console.log(`Playing: ${track.title} from ${currentAlbum.title}`);
+                currentAudio.play().catch(e => {
+                    console.error("Playback failed:", e);
+                    alert("Playback failed. Please check browser console for details.");
+                });
+            });
+            
+            currentAudio.addEventListener('error', (e) => {
+                console.error("Audio error:", e);
+                alert(`Error playing track: ${track.title}\nPlease check if the file exists at:\n${trackPath}`);
+            });
+            
+            currentAudio.addEventListener('ended', () => {
+                nextTrack();
+            });
+        }
+        
+        // Function to update playlist highlight
+        function updatePlaylistHighlight(index) {
+            const playlistItems = document.querySelectorAll('.playlist-item');
+            playlistItems.forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+        
+        // Function to play/pause
+        function togglePlayPause() {
+            if (!currentAudio) return;
+            
+            isPlaying = !isPlaying;
+            const playBtn = document.getElementById('play-btn');
+            playBtn.textContent = isPlaying ? '⏸️' : '▶️';
+            
+            if (isPlaying) {
+                currentAudio.play().catch(e => {
+                    console.error("Playback failed:", e);
+                    alert("Playback failed. Please check browser console for details.");
+                });
+            } else {
+                currentAudio.pause();
+            }
+        }
+        
+        // Function to play next track
+        function nextTrack() {
+            if (!currentAlbum) return;
+            currentTrackIndex = (currentTrackIndex + 1) % currentAlbum.tracks.length;
+            playTrack(currentTrackIndex);
+        }
+        
+        // Function to play previous track
+        function prevTrack() {
+            if (!currentAlbum) return;
+            currentTrackIndex = (currentTrackIndex - 1 + currentAlbum.tracks.length) % currentAlbum.tracks.length;
+            playTrack(currentTrackIndex);
+        }
+        
+        // Function to initialize the player
+        function initPlayer() {
+            // Set up event listeners
+            document.getElementById('play-btn').addEventListener('click', togglePlayPause);
+            document.getElementById('next-btn').addEventListener('click', nextTrack);
+            document.getElementById('prev-btn').addEventListener('click', prevTrack);
+            
+            // Initialize with first album if available
+            playAlbum('Infection');
+        }
+        
+        // Initialize when page loads
+        window.onload = initPlayer;
+        
+        // Function to populate playlist (called from album detail page)
+        function populatePlaylist(albumName) {
+            const album = albums[albumName];
+            if (!album) return;
+            
+            const playlistContainer = document.getElementById('playlist-items');
+            playlistContainer.innerHTML = '';
+            
+            album.tracks.forEach((track, index) => {
+                const playlistItem = document.createElement('div');
+                playlistItem.className = 'playlist-item';
+                if (index === 0) {
+                    playlistItem.classList.add('active');
+                }
+                playlistItem.innerHTML = `
+                    <div class="track-number">${track.number}</div>
+                    <div class="track-title">${track.title}</div>
+                    <div class="track-duration">${track.duration}</div>
+                `;
+                playlistItem.addEventListener('click', () => playTrack(index));
+                playlistContainer.appendChild(playlistItem);
+            });
+        }
+    </script>
+
+    <!-- Free vs Paid Section -->
+    <section class="free-paid-section">
+        <div class="container">
+            <h2>Choose Your Experience</h2>
+            <div class="pricing-tiers">
+                <div class="pricing-card">
+                    <h3>Free Stream</h3>
+                    <p>MP3 Quality</p>
+                    <ul>
+                        <li>🎵 Unlimited streaming</li>
+                        <li>📱 Mobile friendly</li>
+                        <li>🎧 Basic player</li>
+                    </ul>
+                    <button class="btn primary">Start Free</button>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <h3>Premium WAV</h3>
+                    <p>High Quality Audio</p>
+                    <ul>
+                        <li>🔊 Lossless quality</li>
+                        <li>💾 Downloadable</li>
+                        <li>🎁 Exclusive content</li>
+                    </ul>
+                    <button class="btn secondary">Buy WAV</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Subscription</h3>
+                    <p>Early Access</p>
+                    <ul>
+                        <li>🆕 Unreleased tracks</li>
+                        <li>🎧 Early downloads</li>
+                        <li>🎉 Member perks</li>
+                    </ul>
+                    <button class="btn tertiary">Join Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/Images/NRRLogo.png" alt="NRR Logo" width="30" height="30">
+                    <h3>NRR Music</h3>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="albums.html">Albums</a></li>
+                        <li><a href="store.html">Store</a></li>
+                        <li><a href="subscription.html">Subscription</a></li>
+                        <li><a href="instruments.html">Instruments</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#">FB</a>
+                    <a href="#">IG</a>
+                    <a href="#">YT</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NRR Music. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
