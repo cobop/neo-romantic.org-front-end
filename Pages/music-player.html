@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <link rel="icon" href="../assets/Images/favicon.png" type="image/png">
-    <script src="../assets/js/music-player.js"></script>
+     
 </head>
 <body>
     <!-- Header Section -->
@@ -94,198 +94,149 @@
     </section>
     
     <script>
-        // Audio player variables
+        // Minimal client that uses the C++ back‑end API
         let currentAudio = null;
         let isPlaying = false;
-        let currentAlbum = null;
+        let currentAlbumId = null;
         let currentTrackIndex = 0;
-        
-        // Album data
-        const albums = {
-            "Infection": {
-                title: "Infection",
-                artist: "Jane Duke",
-                year: "2024",
-                genre: "Electronic / Ambient",
-                cover: "../assets/Music/Jane Duke/Infection - Mp3/Infection.jpg",
-                tracks: [
-                    {number: 1, title: "Deep Space Melancholy", duration: "3:45", filename: "1 - Deep Space Melancholy.mp3"},
-                    {number: 2, title: "Aether Keys", duration: "4:12", filename: "2 - Aether Keys.mp3"},
-                    {number: 3, title: "Bells Of Heaven", duration: "3:28", filename: "3 - Bells Of Heaven.mp3"},
-                    {number: 4, title: "Time", duration: "5:02", filename: "4 - Time.mp3"},
-                    {number: 5, title: "Insecure Skies", duration: "3:57", filename: "5 - Insecure Skies.mp3"},
-                    {number: 6, title: "Insane Arpeggios", duration: "4:33", filename: "6 - Insane Arpeggios.mp3"},
-                    {number: 7, title: "Drunken Robot Music", duration: "3:15", filename: "7 - Drunken Robot Music.mp3"},
-                    {number: 8, title: "Cyberpunk Racing", duration: "4:08", filename: "8 - Cyberpunk Racing.mp3"},
-                    {number: 9, title: "Infection", duration: "5:22", filename: "9 - Infection.mp3"}
-                ]
-            },
-            "The Origin Of Evil": {
-                title: "The Origin Of Evil",
-                artist: "Jane Duke",
-                year: "2024",
-                genre: "Dark / Epic",
-                cover: "../assets/Music/Jane Duke/The Origin Of Evil - The Legend Of Narcissus And Oedipus - Final - MP3 320kbps/The Origin Of Evil - The Legend Of Narcissus And Oedipus.png",
-                tracks: [
-                    {number: 1, title: "Morning Birds", duration: "3:45", filename: "01 - Morning Birds.mp3"},
-                    {number: 2, title: "Village Festival", duration: "4:12", filename: "02 - Village Festival.mp3"},
-                    {number: 3, title: "Evil's Messenger", duration: "3:28", filename: "03 - Evil's Messenger.mp3"},
-                    {number: 4, title: "Sewers Exploration", duration: "5:02", filename: "04 - Sewers Exploration.mp3"},
-                    {number: 5, title: "Dark Fantasy Jungle", duration: "3:57", filename: "05 - Dark Fantasy Jungle.mp3"},
-                    {number: 6, title: "Obscure Dungeon", duration: "4:33", filename: "06 - Obscure Dungeon.mp3"},
-                    {number: 7, title: "March Of The Nibelungs", duration: "3:15", filename: "07 - March Of The Nibelungs.mp3"},
-                    {number: 8, title: "Anticipated Battles", duration: "4:08", filename: "08 - Anticipated Battles.mp3"},
-                    {number: 9, title: "Battlefield Cacophony", duration: "5:22", filename: "09 - Battlefield Cacophony.mp3"},
-                    {number: 10, title: "Betrayal Of Corrupted Lords", duration: "3:41", filename: "10 - Betrayal Of Corrupted Lords.mp3"},
-                    {number: 11, title: "Soul Crusher", duration: "4:18", filename: "11 - Soul Crusher.mp3"},
-                    {number: 12, title: "Dramatic Waltz", duration: "3:35", filename: "12 - Dramatic Waltz.mp3"},
-                    {number: 13, title: "Burial Of A Friend", duration: "4:27", filename: "13 - Burial Of A Friend.mp3"},
-                    {number: 14, title: "Devil's Joke", duration: "3:59", filename: "14 - Devil's Joke.mp3"},
-                    {number: 15, title: "Welcome To Hells", duration: "4:44", filename: "15 - Welcome To Hells.mp3"},
-                    {number: 16, title: "Dance Of The Undead", duration: "3:22", filename: "16 - Dance Of The Undead.mp3"},
-                    {number: 17, title: "Demonic Melody", duration: "4:10", filename: "17 - Demonic Melody.mp3"},
-                    {number: 18, title: "Railroads Of Tortures", duration: "3:48", filename: "18 - Railroads Of Tortures.mp3"},
-                    {number: 19, title: "Brutal Death Symphony Movement 1", duration: "5:15", filename: "19 - Brutal Death Symphony Movement 1.mp3"},
-                    {number: 20, title: "Brutal Death Symphony Movement 2", duration: "4:30", filename: "20 - Brutal Death Symphony Movement 2.mp3"},
-                    {number: 21, title: "Hopeful Melancholy", duration: "3:55", filename: "21 - Hopeful Melancholy.mp3"}
-                ]
+
+        // Helper to format time strings (e.g., "3:45")
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return m + ':' + (s < 10 ? '0' + s : s);
+        }
+
+        // Load album list from back‑end
+        async function loadAlbums() {
+            const resp = await fetch('https://localhost:8450/api/albums');
+            if (!resp.ok) {
+                console.error('Failed to fetch albums');
+                return [];
             }
-        };
-        
-        // Function to play album
-        function playAlbum(albumName) {
-            const album = albums[albumName];
-            if (!album) return;
-            
-            currentAlbum = album;
-            currentTrackIndex = 0;
-            playTrack(currentTrackIndex);
+            return await resp.json(); // [{id,title,artist,cover,...}]
         }
-        
-        // Function to play specific track
-        function playTrack(index) {
-            if (!currentAlbum || index < 0 || index >= currentAlbum.tracks.length) return;
-            
-            const track = currentAlbum.tracks[index];
-            const trackPath = `./assets/Music/Jane Duke/${encodeURIComponent(currentAlbum.title.replace(/\s+/g, ' '))}/${encodeURIComponent(track.filename)}`;
-            
-            // Update UI
-            document.getElementById('now-playing-title').textContent = track.title;
-            document.getElementById('now-playing-artist').textContent = currentAlbum.artist;
-            document.getElementById('now-playing-album').textContent = currentAlbum.title;
-            document.getElementById('now-playing-cover').src = currentAlbum.cover;
-            
-            // Update playlist highlighting
-            updatePlaylistHighlight(index);
-            
-            // Create audio element for actual playback
-            if (currentAudio) {
-                currentAudio.pause();
+
+        // Load tracks for a given album
+        async function loadTracks(albumId) {
+            const resp = await fetch(`https://localhost:8450/api/albums/${encodeURIComponent(albumId)}/tracks`);
+            if (!resp.ok) {
+                console.error('Failed to fetch tracks for', albumId);
+                return [];
             }
-            
-            // Create new audio element
-            currentAudio = new Audio(trackPath);
-            
-            // Set up audio event handlers
-            currentAudio.addEventListener('canplay', () => {
-                console.log(`Playing: ${track.title} from ${currentAlbum.title}`);
-                currentAudio.play().catch(e => {
-                    console.error("Playback failed:", e);
-                    alert("Playback failed. Please check browser console for details.");
-                });
-            });
-            
-            currentAudio.addEventListener('error', (e) => {
-                console.error("Audio error:", e);
-                alert(`Error playing track: ${track.title}\nPlease check if the file exists at:\n${trackPath}`);
-            });
-            
-            currentAudio.addEventListener('ended', () => {
-                nextTrack();
-            });
+            return await resp.json(); // array of track objects
         }
-        
-        // Function to update playlist highlight
-        function updatePlaylistHighlight(index) {
-            const playlistItems = document.querySelectorAll('.playlist-item');
-            playlistItems.forEach((item, i) => {
-                if (i === index) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-        }
-        
-        // Function to play/pause
-        function togglePlayPause() {
-            if (!currentAudio) return;
-            
-            isPlaying = !isPlaying;
-            const playBtn = document.getElementById('play-btn');
-            playBtn.textContent = isPlaying ? '⏸️' : '▶️';
-            
-            if (isPlaying) {
-                currentAudio.play().catch(e => {
-                    console.error("Playback failed:", e);
-                    alert("Playback failed. Please check browser console for details.");
-                });
-            } else {
-                currentAudio.pause();
-            }
-        }
-        
-        // Function to play next track
-        function nextTrack() {
-            if (!currentAlbum) return;
-            currentTrackIndex = (currentTrackIndex + 1) % currentAlbum.tracks.length;
-            playTrack(currentTrackIndex);
-        }
-        
-        // Function to play previous track
-        function prevTrack() {
-            if (!currentAlbum) return;
-            currentTrackIndex = (currentTrackIndex - 1 + currentAlbum.tracks.length) % currentAlbum.tracks.length;
-            playTrack(currentTrackIndex);
-        }
-        
-        // Function to initialize the player
-        function initPlayer() {
-            // Set up event listeners
-            document.getElementById('play-btn').addEventListener('click', togglePlayPause);
-            document.getElementById('next-btn').addEventListener('click', nextTrack);
-            document.getElementById('prev-btn').addEventListener('click', prevTrack);
-            
-            // Initialize with first album if available
-            playAlbum('Infection');
-        }
-        
-        // Initialize when page loads
-        window.onload = initPlayer;
-        
-        // Function to populate playlist (called from album detail page)
-        function populatePlaylist(albumName) {
-            const album = albums[albumName];
-            if (!album) return;
-            
+
+        // Populate playlist UI
+        async function populatePlaylist(albumId) {
+            const tracks = await loadTracks(albumId);
             const playlistContainer = document.getElementById('playlist-items');
             playlistContainer.innerHTML = '';
-            
-            album.tracks.forEach((track, index) => {
-                const playlistItem = document.createElement('div');
-                playlistItem.className = 'playlist-item';
-                if (index === 0) {
-                    playlistItem.classList.add('active');
-                }
-                playlistItem.innerHTML = `
+            tracks.forEach((track, idx) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item';
+                if (idx === 0) item.classList.add('active');
+                item.innerHTML = `
                     <div class="track-number">${track.number}</div>
                     <div class="track-title">${track.title}</div>
                     <div class="track-duration">${track.duration}</div>
                 `;
-                playlistItem.addEventListener('click', () => playTrack(index));
-                playlistContainer.appendChild(playlistItem);
+                item.addEventListener('click', () => playTrack(idx));
+                playlistContainer.appendChild(item);
             });
         }
+
+        // Update UI for currently playing track
+        function updateNowPlaying(track) {
+            document.getElementById('now-playing-title').textContent = track.title;
+            document.getElementById('now-playing-artist').textContent = track.artist || '';
+            document.getElementById('now-playing-album').textContent = track.album || '';
+            document.getElementById('now-playing-cover').src = track.cover || '';
+        }
+
+        // Highlight active playlist item
+        function highlightTrack(idx) {
+            const items = document.querySelectorAll('.playlist-item');
+            items.forEach((el, i) => {
+                if (i === idx) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+        }
+
+        // Play a specific track index
+        async function playTrack(index) {
+            if (!currentAlbumId) return;
+            const tracks = await loadTracks(currentAlbumId);
+            if (index < 0 || index >= tracks.length) return;
+            const track = tracks[index];
+            const streamUrl = `https://localhost:8450/api/stream/${encodeURIComponent(currentAlbumId)}/${track.number}`;
+            if (currentAudio) currentAudio.pause();
+            currentAudio = new Audio(streamUrl);
+            currentAudio.addEventListener('canplay', () => {
+                currentAudio.play().catch(e => console.error('Play error', e));
+            });
+            currentAudio.addEventListener('error', (e) => {
+                console.error('Audio error', e);
+                alert('Failed to play track. See console for details.');
+            });
+            currentAudio.addEventListener('timeupdate', () => {
+                const cur = currentAudio.currentTime;
+                const dur = currentAudio.duration || 0;
+                document.getElementById('current-time').textContent = formatTime(cur);
+                document.getElementById('total-time').textContent = isNaN(dur) ? '' : formatTime(dur);
+                const prog = (cur / dur) * 100;
+                document.getElementById('progress-bar').style.width = prog + '%';
+            });
+            currentAudio.addEventListener('ended', nextTrack);
+            updateNowPlaying(track);
+            highlightTrack(index);
+            currentTrackIndex = index;
+            isPlaying = true;
+            document.getElementById('play-btn').textContent = '⏸️';
+        }
+
+        // Play/pause toggle
+        function togglePlayPause() {
+            if (!currentAudio) return;
+            if (isPlaying) {
+                currentAudio.pause();
+                document.getElementById('play-btn').textContent = '▶️';
+            } else {
+                currentAudio.play().catch(e => console.error('Play error', e));
+                document.getElementById('play-btn').textContent = '⏸️';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Next / previous track navigation
+        function nextTrack() {
+            const nextIdx = (currentTrackIndex + 1) % (document.querySelectorAll('.playlist-item').length);
+            playTrack(nextIdx);
+        }
+        function prevTrack() {
+            const prevIdx = (currentTrackIndex - 1 + document.querySelectorAll('.playlist-item').length) % document.querySelectorAll('.playlist-item').length;
+            playTrack(prevIdx);
+        }
+
+        // Initialise player UI
+        async function initPlayer() {
+            const albums = await loadAlbums();
+            if (albums.length === 0) return;
+            // Choose first album by default
+            currentAlbumId = albums[0].id;
+            // Update cover/metadata if needed
+            document.getElementById('now-playing-cover').src = albums[0].cover || '';
+            // Populate playlist
+            await populatePlaylist(currentAlbumId);
+            // Set up controls
+            document.getElementById('play-btn').addEventListener('click', togglePlayPause);
+            document.getElementById('next-btn').addEventListener('click', nextTrack);
+            document.getElementById('prev-btn').addEventListener('click', prevTrack);
+            // Auto‑play first track
+            await playTrack(0);
+        }
+
+        window.onload = initPlayer;
     </script>
 
     <!-- Free vs Paid Section -->
