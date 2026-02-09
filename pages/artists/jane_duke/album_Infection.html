@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeoRomantic – Infection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../styles/main.css">
+<link rel="stylesheet" href="../../../styles/player.css">
+    <script src="../../../scripts/player.js" defer></script>
+    <script src="../../../scripts/search.js" defer></script>
+</head>
+<body>
+    <header>
+        <img src="/assets/images/NRRLogo.png" alt="NeoRomantic Logo" class="logo">
+        <nav>
+            <div class="nav-links">
+                <a href="/pages/home.html">Home</a>
+                <a href="/pages/artists/artists.html">Artists</a>
+                <a href="/pages/about.html">About Us</a>
+                <a href="/pages/artists/vault.html">Unreleased Music Vault</a>
+                <input type="text" id="search-input" placeholder="Search music, artists, tracks...">
+            </div>
+            <div class="utility-links">
+                <a href="#login">Login</a>
+                <a href="#register">Register</a>
+                <a href="/pages/cart.html">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container album-page">
+        <section class="album-detail">
+                <div class="album-cover">
+                <img src="/assets/music/Jane_Duke/Infection - Mp3/Infection.jpg" alt="Infection Cover">
+            </div>
+            <div class="description">
+                <h1>Infection</h1>
+                <p>Description coming soon.</p>
+            </div>
+        </section>
+
+        <section class="tracklist">
+            <h2>Track List</h2>
+            <ol>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/Jane_Duke/Infection - Mp3/1 - Deep Space Melancholy.mp3')">1 - Deep Space Melancholy</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/Jane_Duke/Infection - Mp3/2 - Aether Keys.mp3')">2 - Aether Keys</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/Jane_Duke/Infection - Mp3/3 - Bells Of Heaven.mp3')">3 - Bells Of Heaven</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/Jane_Duke/Infection - Mp3/4 - Time.mp3')">4 - Time</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/Jane_Duke/Infection - Mp3/5 - Insecure Skies.mp3')">5 - Insecure Skies</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/Jane_Duke/Infection - Mp3/6 - Insane Arpeggios.mp3')">6 - Insane Arpeggios</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/Jane_Duke/Infection - Mp3/7 - Drunken Robot Music.mp3')">7 - Drunken Robot Music</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/Jane_Duke/Infection - Mp3/8 - Cyberpunk Racing.mp3')">8 - Cyberpunk Racing</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/Jane_Duke/Infection - Mp3/9 - Infection.mp3')">9 - Infection</a></li>
+            </ol>
+        </section>
+    </main>
+
+        <footer>
+            <div class="music-player">
+                <div class="cover"><img src="/assets/images/NRRLogo.png" alt="Cover"></div>
+                <div class="info">
+                    <div class="now-playing">Now playing: —</div>
+                    <div class="title"></div>
+                    <div class="artist"></div>
+                    <div class="duration"></div>
+                    <div class="progress-bar"><div class="progress"></div></div>
+                </div>
+            </div>
+        </footer>
+</body>
+</html>

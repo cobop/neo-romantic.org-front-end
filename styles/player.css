@@ -1,0 +1,91 @@
+/* player.css – Full‑width music player styling
+   Black background with red accent, responsive layout, and progress bar.
+*/
+
+.music-player {
+    display: flex;
+    align-items: center;
+    background-color: #000;               /* black background */
+    color: #ff0000;                       /* red accent for text */
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+    font-family: "Libre Baskerville", serif;
+}
+
+/* Album cover on the left */
+.music-player .cover img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Track info */
+.music-player .info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0; /* allow text truncation */
+}
+.music-player .info .now-playing {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #ff0000;
+}
+.music-player .info .title,
+.music-player .info .artist {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.music-player .info .title {
+    font-size: 1.1rem;
+    margin-top: 0.2rem;
+}
+.music-player .info .artist {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+/* Duration display */
+.music-player .info .duration {
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+}
+
+/* Progress bar container */
+.music-player .progress-bar {
+    position: relative;
+    height: 6px;
+    background-color: #333;
+    flex-basis: 100%;
+    cursor: pointer;
+    border-radius: 3px;
+    overflow: hidden;
+}
+.music-player .progress-bar .progress {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background-color: #ff0000;
+}
+
+/* Responsive adjustments for narrow viewports */
+@media (max-width: 600px) {
+    .music-player {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .music-player .cover img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 0.5rem;
+    }
+    .music-player .info {
+        align-items: center;
+        text-align: center;
+    }
+    .music-player .progress-bar {
+        margin-top: 0.5rem;
+    }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeoRomantic – The Origin Of Evil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../styles/main.css">
+<link rel="stylesheet" href="../../../styles/player.css">
+<!-- Removed duplicate incorrect player.css reference -->
+    <script src="../../../scripts/player.js" defer></script>
+    <script src="../../../scripts/search.js" defer></script>
+</head>
+<body>
+    <header>
+        <img src="/assets/images/NRRLogo.png" alt="NeoRomantic Logo" class="logo">
+        <nav>
+            <div class="nav-links">
+                <a href="/pages/home.html">Home</a>
+                <a href="/pages/artists/artists.html">Artists</a>
+                <a href="/pages/about.html">About Us</a>
+                <a href="/pages/artists/vault.html">Unreleased Music Vault</a>
+                <input type="text" id="search-input" placeholder="Search music, artists, tracks...">
+            </div>
+            <div class="utility-links">
+                <a href="#login">Login</a>
+                <a href="#register">Register</a>
+                <a href="/pages/cart.html">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container album-page">
+        <section class="album-detail">
+            <div class="cover">
+                <img src="/assets/images/NRRLogo.png" alt="The Origin Of Evil Cover">
+            </div>
+            <div class="description">
+                <h1>The Origin Of Evil</h1>
+                <p>
+                    <!-- Full album description goes here. Replace this placeholder text with the actual description. -->
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
+                    dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas
+                    ligula massa, varius a, semper congue, euismod non, mi.
+                </p>
+            </div>
+        </section>
+
+        <section class="tracklist">
+            <h2>Track List</h2>
+            <ol>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/track1.mp3')">01 – Track One</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/track2.mp3')">02 – Track Two</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/track3.mp3')">03 – Track Three</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/track4.mp3')">04 – Track Four</a></li>
+                <li><a href="javascript:void(0)" onclick="playTrack('/assets/music/track5.mp3')">05 – Track Five</a></li>
+            </ol>
+        </section>
+    </main>
+
+    <footer>
+    <div class="music-player">
+        <div class="cover"><img src="/assets/images/NRRLogo.png" alt="Cover"></div>
+        <div class="info">
+            <div class="now-playing">Now playing: —</div>
+            <div class="title"></div>
+            <div class="artist"></div>
+            <div class="duration"></div>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

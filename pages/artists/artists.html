@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeoRomantic – Artists</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/main.css">
+<link rel="stylesheet" href="../../styles/player.css">
+    <script src="../../scripts/player.js" defer></script>
+<script src="../../scripts/search.js" defer></script>
+</head>
+<body>
+    <header>
+        <img src="/assets/images/NRRLogo.png" alt="NeoRomantic Logo" class="logo">
+        <nav>
+            <div class="nav-links">
+                <a href="/pages/home.html">Home</a>
+                <a href="/pages/artists/artists.html">Artists</a>
+                <a href="/pages/about.html">About Us</a>
+                <a href="/pages/artists/vault.html">Unreleased Music Vault</a>
+                <input type="text" id="search-input" placeholder="Search music, artists, tracks...">
+            </div>
+            <div class="utility-links">
+                <a href="#login">Login</a>
+                <a href="#register">Register</a>
+                <a href="/pages/cart.html">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Artists</h2>
+        <div class="album-grid">
+            <!-- Example placeholder artist card -->
+                <a href="jane_duke/Jane_Duke.html" class="artist-card">
+                <img src="/assets/images/placeholder-artist.jpg" alt="Artist Photo" class="artist-photo">
+                <span>Jane Duke</span>
+            </a>
+            <!-- Add more artist cards here -->
+        </div>
+    </main>
+
+    <footer>
+    <div class="music-player">
+        <div class="cover"><img src="/assets/images/NRRLogo.png" alt="Cover"></div>
+        <div class="info">
+            <div class="now-playing">Now playing: —</div>
+            <div class="title"></div>
+            <div class="artist"></div>
+            <div class="duration"></div>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

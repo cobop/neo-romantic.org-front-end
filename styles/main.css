@@ -1,0 +1,272 @@
+/* Basic styling for NeoRomantic frontend */
+html {
+    height: 100%;
+}
+body {
+    font-family: "Libre Baskerville", serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    /* Gradient background: black exterior to dark‑red interior */
+    background: linear-gradient(to bottom, #000000, #8b0000);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #DAA520; /* golden text */
+}
+
+/* Load Baskerville font */
+@font-face {
+    font-family: "Libre Baskerville";
+    src: url("../fonts/LibreBaskerville-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Header and Footer */
+header, footer {
+    background-color: #222;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Header styling – full width, login button on right */
+nav {
+    display: flex;
+    align-items: center;
+}
+nav a {
+    background-color: #ffd700;
+    color: #000;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+}
+nav a:hover {
+    background-color: #e6c200;
+}
+.nav-links input#search-input {
+    margin-left: 0.5rem; /* optional small spacing */
+}
+header {
+    background: transparent;
+    color: #DAA520;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #800000; /* separator */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    position: relative;               /* enable absolute positioning of child nav */
+}
+
+/* Footer – fixed at bottom */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px; /* increased height for full‑width player */
+    background: #000; /* plain black */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Player container styling – red background, full width */
+.player-container {
+    background-color: #ff0000; /* red */
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Player control buttons */
+.player-button {
+    background-color: #ffd700; /* golden */
+    color: #000; /* black text */
+    border: none;
+    padding: 0.4rem 0.8rem;
+    margin: 0 0.2rem;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+.player-button:hover {
+    background-color: #e6c200;
+    transform: scale(1.05);
+}
+
+/* General buttons (e.g., forms) – use same golden style */
+button {
+    background-color: #ffd700;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+button:hover {
+    background-color: #e6c200;
+    transform: scale(1.02);
+}
+.button, a.button {
+    background-color: #ffd700;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.button:hover, a.button:hover {
+    background-color: #e6c200;
+    transform: scale(1.02);
+}
+
+/* Audio element */
+footer audio {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Logo image in header */
+.logo {
+    height: 80px; /* enlarged logo */
+}
+
+/* New navigation layout: center links, right‑align utilities */
+nav {
+    display: flex;
+    align-items: center;
+}
+.nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+.utility-links {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: auto;            /* pushes utilities to the right */
+}
+
+/* Album grid layout – horizontal scrolling */
+.album-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 1rem;
+    justify-content: flex-start;
+    margin: 1rem 0;
+}
+
+/* Individual album thumbnail */
+.album {
+    text-align: center;
+    width: 150px;
+}
+
+/* Ensure album images fill the thumbnail container */
+.album img {
+    width: 100%;
+    height: auto;
+}
+
+/* Larger album cover on album page */
+.album-cover {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+}
+
+/* Headings */
+h1, h2, h3 {
+    margin: 0.5rem 0;
+}
+
+/* Ensure images are responsive */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Content container */
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+}
+label {
+    margin-top: 0.5rem;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Ensure body content does not hide behind fixed footer */
+body {
+    padding-bottom: 130px; /* footer height + margin */
+}
+
+/* --------------------------------------------------------------
+   Additional CSS Animations & Hover Effects
+   -------------------------------------------------------------- */
+
+/* Fade‑in animation for page load */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Album card hover scaling */
+.album {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.album:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Artist card styling – mirrors album card appearance */
+.artist-card {
+    text-align: center;
+    width: 150px;
+}
+.artist-card img {
+    width: 100%;
+    height: auto;
+}
+
+/* Player button interaction (already has hover, add slight pulse) */
+.player-button {
+    animation: none;
+}
+.player-button:active {
+    transform: scale(0.95);
+}

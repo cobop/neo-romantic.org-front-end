@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeoRomantic – Jane Duke</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../styles/main.css">
+    <script src="../../../scripts/player.js" defer></script>
+    <script src="../../../scripts/search.js" defer></script>
+</head>
+<body>
+    <header>
+        <img src="/assets/images/NRRLogo.png" alt="NeoRomantic Logo" class="logo">
+        <nav>
+            <div class="nav-links">
+                <a href="/pages/home.html">Home</a>
+                <a href="/pages/artists.html">Artists</a>
+                <a href="/pages/about.html">About Us</a>
+                <a href="/pages/vault.html">Unreleased Music Vault</a>
+                <input type="text" id="search-input" placeholder="Search music, artists, tracks...">
+            </div>
+            <div class="utility-links">
+                <a href="#login">Login</a>
+                <a href="#register">Register</a>
+                <a href="/pages/cart.html">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container artist-page">
+        <section class="artist-detail">
+            <div class="artist-photo">
+                <img src="/assets/images/placeholder-artist.jpg" alt="Jane Duke Photo">
+            </div>
+            <div class="artist-bio">
+                <h1>Jane Duke</h1>
+                <p>Jane Duke is a visionary composer blending neo‑romantic orchestration with contemporary electronic textures. Her work explores emotive soundscapes that invite listeners into intimate journeys of reflection and wonder.</p>
+            </div>
+        </section>
+
+        <section class="artist-albums">
+            <h2>Albums</h2>
+            <div class="album-grid">
+                <a href="album_Infection.html" class="album">
+                    <img src="/assets/music/Jane_Duke/Infection - Mp3/Infection.jpg" alt="Infection">
+                    <span>Infection</span>
+                </a>
+                <a href="album_The_Origin_Of_Evil.html" class="album">
+                    <img src="/assets/music/Jane_Duke/The%20Origin%20Of%20Evil%20-%20The%20Legend%20Of%20Narcissus%20And%20Oedipus%20-%20Final%20-%20MP3%20320kbps/The%20Origin%20Of%20Evil%20-%20The%20Legend%20Of%20Narcissus%20And%20Oedipus.png" alt="The Origin Of Evil">
+                    <span>The Origin Of Evil</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="player-container">
+            <div id="now-playing">Now playing: —</div>
+            <button id="btn-prev" class="player-button">Prev</button>
+            <button id="btn-play" class="player-button">Play</button>
+            <button id="btn-pause" class="player-button">Pause</button>
+            <button id="btn-next" class="player-button">Next</button>
+            <audio id="player" controls autoplay preload="metadata">
+                <source src="/stream" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeoRomantic – Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/main.css">
+<link rel="stylesheet" href="../styles/player.css">
+    <script src="../scripts/player.js" defer></script>
+    <script src="../scripts/search.js" defer></script>
+</head>
+<body>
+    <header>
+        <img src="/assets/images/NRRLogo.png" alt="NeoRomantic Logo" class="logo">
+        <nav>
+            <div class="nav-links">
+                <a href="/pages/home.html">Home</a>
+                <a href="/pages/artists/artists.html">Artists</a>
+                <a href="/pages/about.html">About Us</a>
+                <a href="/pages/artists/vault.html">Unreleased Music Vault</a>
+                <input type="text" id="search-input" placeholder="Search music, artists, tracks...">
+            </div>
+            <div class="utility-links">
+                <a href="#login">Login</a>
+                <a href="#register">Register</a>
+                <a href="/pages/cart.html">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="hero">
+            <h1>Welcome to Neo‑Romantic Records</h1>
+            <p>Discover the latest and greatest releases.</p>
+        </section>
+
+        <section id="releases">
+            <h2>Latest & Biggest Releases</h2>
+<div class="album-grid" id="release-grid">
+    <!-- Album cards will be inserted here by server or manually added later -->
+    <!-- Example placeholder -->
+        <a href="jane_duke/album_Infection.html" class="album">
+            <img src="/assets/music/Jane_Duke/Infection - Mp3/Infection.jpg" alt="Infection">
+            <span>Infection</span>
+        </a>
+        <a href="jane_duke/album_The_Origin_Of_Evil.html" class="album">
+            <img src="/assets/music/Jane_Duke/The%20Origin%20Of%20Evil%20-%20The%20Legend%20Of%20Narcissus%20And%20Oedipus%20-%20Final%20-%20MP3%20320kbps/The%20Origin%20Of%20Evil%20-%20The%20Legend%20Of%20Narcissus%20And%20Oedipus.png" alt="The Origin Of Evil">
+            <span>The Origin Of Evil</span>
+        </a>
+</div>
+        </section>
+    <section id="engine-revolution" class="fade-in">
+        <h2>Art As The Engine Of Revolution</h2>
+        <p>NeoRomantic Records believes that art drives cultural evolution, inspiring listeners to explore new emotional landscapes.</p>
+    </section>
+    </main>
+
+<footer>
+    <div class="music-player">
+        <div class="cover"><img src="/assets/images/NRRLogo.png" alt="Cover"></div>
+        <div class="info">
+            <div class="now-playing">Now playing: —</div>
+            <div class="title"></div>
+            <div class="artist"></div>
+            <div class="duration"></div>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
+    </div>
+    <div class="controls">
+        <button id="btn-prev" class="player-button">Prev</button>
+        <button id="btn-play" class="player-button">Play</button>
+        <button id="btn-pause" class="player-button">Pause</button>
+        <button id="btn-next" class="player-button">Next</button>
+    <audio id="player"><source src=""></source></audio>
+    </div>
+</footer>
+</body>
+</html>
